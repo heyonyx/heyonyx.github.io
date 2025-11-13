@@ -136,7 +136,7 @@ After viewing the content of `exploit.timer`, I realized that `OnBootSec` wasn't
 
 ![](/assets/cheese-thm/24.png).
 
-Also, after analyzing the content of `exploit.service`, I found that it executes some commands which are, it copies `/usr/bin/xxd` to `/opt/xxd` and it gives it an `SUID` binary which makes the file run with the permission of the `owner` which in this case is `root` and also makes it executable.
+Also, after analyzing the content of `exploit.service`, I found that it executes some commands which are, copying `/usr/bin/xxd` to `/opt/xxd` and giving it an `SUID` binary which makes the file run with the permission of the `owner` which in this case is `root` and also making it executable.
 But this is what we need to ask ourselves... `what is xxd? and what is it used for?` If we find answers to these questions, we'll know how to take advantage of it. After some research, I found out that it can be used for `file read` and we're fortunate that it's owner is root and it has `SUID` set to it so we can read root's flag with this 😊.
 I headed to `https://gtfobins.github.io/gtfobins/xxd` where I found how the command is used.
 I then executed the commands I have `sudo` privileges over in the format:
