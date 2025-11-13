@@ -1,8 +1,9 @@
 ---
 layout: post
+image: https://tryhackme-images.s3.amazonaws.com/room-icons/618b3fa52f0acc0061fb0172-1718375657104
 title: "Cheese Tryhackme (easy)-Writeup"
 date: 2025-11-13 2:00:00 +0000
-author: sh4de
+author: sh4de00
 categories: [CTF, Writeup]
 tags: [tryhackme]
 ---
