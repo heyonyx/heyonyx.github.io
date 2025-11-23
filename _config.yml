@@ -14,22 +14,22 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: sh4de # the main title
+title: 0nyx # the main title
 
 tagline: Your Casual Tech Buff # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-  blog,sh4de00,github.
+  blog,0nyx99,github.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://sh4de00.github.io"
+url: "https://0nyx99.github.io"
 
 github:
-  username: sh4de00 # change to your GitHub username
+  username: 0nyx99 # change to your GitHub username
 
 twitter:
-  username: sh4de_0 # change to your Twitter username
+  username: 0nyx_099 # change to your Twitter username
 
 social:
   # Change to your full name.
@@ -38,11 +38,11 @@ social:
   email: kingstonkanab1@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://www.linkedin.com/in/sh4de # change to your Twitter homepage
-    - https://github.com/sh4de00 # change to your GitHub homepage
+    - https://www.linkedin.com/in/0nyx # change to your Twitter homepage
+    - https://github.com/0nyx99 # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    - https://twitter.com/sh4de_0
+    - https://twitter.com/0nyx_099
 
 # Site Verification Settings
 webmaster_verifications:
