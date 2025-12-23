@@ -2,7 +2,7 @@
 layout: post
 title: "Cheese Tryhackme (easy)-Writeup"
 date: 2025-11-13 2:00:00 +0000
-author: sh4de
+author: 0nyx
 categories: [CTF, Writeup]
 tags: [tryhackme]
 ---
@@ -164,3 +164,5 @@ I navigated to `/opt` and run the final command which is:
 and had the flag😉.
 
 ![](/assets/cheese-thm/29.png)
+
+![](/assets/finishing.gif)
