@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Zazuu echoCTF (Guru)-Writeup"
+title: "Zazuu EchoCTF (Guru)-Writeup"
 date: 2025-12-23 2:00:00 +0000
-author: 0nyx
+author: onyx
 categories: [CTF, Writeup]
 tags: [echoCTF]
 ---
