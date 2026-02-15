@@ -98,7 +98,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://freepnglogos.com/pics/hacker
+avatar: https://www.google.com/imgres?q=hacker&imgurl=https%3A%2F%2Fvida.id%2Fhubfs%2FPerbedaan%2520Hacker%2520dan%2520Cracker.jpg&imgrefurl=https%3A%2F%2Fvida.id%2Fen%2Fblog%2Fhacker-and-cracker&docid=g2rlbbe_TKScHM&tbnid=fsYW5XsmQLRSsM&vet=12ahUKEwiZuvOKi9uSAxUrTaQEHabHAawQnPAOegQIRBAB..i&w=5760&h=3840&hcb=2&ved=2ahUKEwiZuvOKi9uSAxUrTaQEHabHAawQnPAOegQIRBAB
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
 social_preview_image: # string, local or CORS resources
