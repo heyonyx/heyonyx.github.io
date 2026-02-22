@@ -1,5 +1,5 @@
 ---
-layout: terminal
+layout: post
 title: "Cheese Tryhackme (Easy)-Writeup"
 date: 2025-11-13 2:00:00 +0000
 author: onyx
