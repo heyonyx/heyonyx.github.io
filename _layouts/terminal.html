@@ -1,0 +1,255 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} // 0nyx</title>
+    <style>
+        /* Same exact CSS from your index.html - copy all styles from <style> to </style> */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            color: #cc3300;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* Ashy black textured overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(20, 0, 0, 0.1) 2px, transparent 3px, transparent 5px),
+                radial-gradient(circle at 30% 40%, #1a0a0a 0%, #0a0505 60%, #020202 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Animated code rain */
+        .code-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+            font-size: 18px;
+            line-height: 1.2;
+            color: #8b0000;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .code-rain span {
+            position: absolute;
+            top: -100px;
+            animation: rain linear infinite;
+            user-select: none;
+            text-shadow: 0 0 8px #ff3300;
+        }
+        @keyframes rain {
+            from { top: -100px; }
+            to { top: 110vh; }
+        }
+        /* Moving scanline */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to bottom, transparent, #ff0000 50%, transparent);
+            opacity: 0.2;
+            animation: scan 8s linear infinite;
+            z-index: 3;
+            pointer-events: none;
+        }
+        @keyframes scan {
+            0% { top: -10px; }
+            100% { top: 110vh; }
+        }
+        /* Terminal container for posts */
+        .terminal-post {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            background-color: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(2px);
+            border-left: 3px solid #8b0000;
+            border-right: 1px solid #330000;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(139, 0, 0, 0.2);
+        }
+        .post-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #330000;
+            padding-bottom: 1rem;
+        }
+        .post-title {
+            color: #ff4422;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .post-meta {
+            color: #994400;
+            font-size: 0.9rem;
+        }
+        .post-content {
+            color: #cc8866;
+            line-height: 1.8;
+        }
+        .post-content h1, .post-content h2, .post-content h3 {
+            color: #ff4422;
+            margin: 1.5rem 0 1rem 0;
+            border-left: 3px solid #8b0000;
+            padding-left: 1rem;
+        }
+        .post-content h1 { font-size: 1.8rem; }
+        .post-content h2 { font-size: 1.5rem; }
+        .post-content h3 { font-size: 1.2rem; }
+        .post-content p {
+            margin: 1rem 0;
+        }
+        .post-content a {
+            color: #ff6644;
+            text-decoration: none;
+            border-bottom: 1px dashed #8b0000;
+        }
+        .post-content a:hover {
+            color: #ff3300;
+            border-bottom-color: #ff3300;
+        }
+        .post-content pre {
+            background: #0d0d0d;
+            border: 1px solid #440000;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            color: #ff8866;
+            border-left: 4px solid #aa2222;
+            font-family: 'Fira Code', monospace;
+        }
+        .post-content code {
+            background: #1a0a0a;
+            padding: 0.2rem 0.4rem;
+            border-radius: 2px;
+            color: #ff6644;
+            font-family: 'Fira Code', monospace;
+        }
+        .post-content blockquote {
+            border-left: 3px solid #8b0000;
+            background: rgba(139, 0, 0, 0.1);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+        .post-content ul, .post-content ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+        .post-content li {
+            margin: 0.5rem 0;
+        }
+        .post-content img {
+            max-width: 100%;
+            border: 1px solid #330000;
+            margin: 1.5rem 0;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 2rem 0 1rem 0;
+            color: #aa3333;
+            text-decoration: none;
+            border: 1px solid #330000;
+            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            background: #330000;
+            color: #ff4422;
+            border-color: #ff4422;
+        }
+        .back-link::before {
+            content: "< ";
+        }
+        .footer {
+            margin-top: 4rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid #330000;
+            text-align: center;
+            color: #664422;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="code-rain" id="codeRain"></div>
+    <div class="scanline"></div>
+
+    <div class="terminal-post">
+        <a href="/" class="back-link">BACK TO TERMINAL</a>
+        
+        <header class="post-header">
+            <h1 class="post-title">{{ page.title }}</h1>
+            <div class="post-meta">
+                <span>root@0nyx:~# </span>published: {{ page.date | date: "%Y-%m-%d" }} || tags: [{{ page.tags | join: ', ' }}]
+            </div>
+        </header>
+
+        <article class="post-content">
+            {{ content }}
+        </article>
+
+        <footer class="footer">
+            <div>=======================================</div>
+            <div>0nyx@blog:~$ <span style="color:#ff4422">cat post</span></div>
+            <div>=======================================</div>
+            <div style="margin-top:1.5rem">
+                <a href="/">[return to terminal]</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Code rain generator (same as index)
+        function generateCodeRain() {
+            const rainContainer = document.getElementById('codeRain');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+            for (let i = 0; i < 50; i++) {
+                const span = document.createElement('span');
+                span.style.left = Math.random() * 100 + '%';
+                span.style.animationDuration = (8 + Math.random() * 15) + 's';
+                span.style.animationDelay = (Math.random() * -20) + 's';
+                span.style.fontSize = (14 + Math.floor(Math.random() * 20)) + 'px';
+                span.style.opacity = 0.1 + Math.random() * 0.2;
+                span.style.color = Math.random() > 0.7 ? '#ff2222' : '#aa2222';
+                
+                let text = '';
+                for (let j = 0; j < 15 + Math.floor(Math.random() * 20); j++) {
+                    text += chars[Math.floor(Math.random() * chars.length)];
+                }
+                span.textContent = text;
+                rainContainer.appendChild(span);
+            }
+        }
+
+        window.onload = generateCodeRain;
+    </script>
+</body>
+</html>
