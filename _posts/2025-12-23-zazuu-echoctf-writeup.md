@@ -1,5 +1,5 @@
 ---
-layout: terminal
+layout: post
 title: "Zazuu EchoCTF (Guru)-Writeup"
 date: 2025-12-23 2:00:00 +0000
 author: onyx
